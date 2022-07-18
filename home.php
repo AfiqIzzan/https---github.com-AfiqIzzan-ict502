@@ -68,8 +68,7 @@
 	<h1>My Health Clinic</h1><br>
 	<div class="pic"><img style="align-content: center;" src="doc.png"><br></div><br>
 	<div><p class="tx">MyHealth Clinic is a network of multi-specialty medical clinics offering 
-		comprehensive outpatient 
-		healthcare products and services. Believing that healthcare should be not just 
+		comprehensive outpatient healthcare products and services. Believing that healthcare should be not just 
 		of quality, but must also be accessible, we integrated in our clinics the entire 
 		spectrum of medical services that patients need to take better care of their health.</p>
 		<br>
