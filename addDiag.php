@@ -1,6 +1,10 @@
 <html>
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -117,32 +121,31 @@
         <br><br>
         Doctor Id <input style="border: none;" type="text" name="docid" readonly value="<?php echo $row['DOCTOR_ID']; ?>">
         <br><br>
-        Diagnosis Details <br>
-        <?php
-        $stid = oci_parse($conn, 'select * from DIAGNOSIS');
-        $row = oci_execute($stid);
-        $i = 0;
-        while ($row = oci_fetch_assoc($stid)) {
-        ?>
-            <input class="cbox" type="checkbox" name="medc[]" value="<?php echo $row["MED_ID"]; ?>"><?php echo $row["MED_NAME"]; ?><br>
-        <?php
-            $i++;
-        }
-        ?>
-        <br><br>
-        Medicine<br>
-        <?php
-        $stid = oci_parse($conn, 'select * from MEDICINE');
-        $row = oci_execute($stid);
-        $i = 0;
-        while ($row = oci_fetch_assoc($stid)) {
-        ?>
-            <input class="cbox" type="checkbox" name="medc[]" value="<?php echo $row["MED_ID"]; ?>"><?php echo $row["MED_NAME"]; ?><br>
-        <?php
-            $i++;
-        }
-        ?>
-        <br><br>
+        Diagnosis
+        <script>
+        $(document).ready(function() {
+            $('select').selectize({
+                sortField: 'text'
+            });
+        });
+        </script>
+        <select name='diagid'>
+            <option value="">Select Diagnosis</option>
+            <?php
+            $stid = oci_parse($conn, 'select * from DIAGNOSIS order by DIAGNOSIS_ID asc');
+            $row = oci_execute($stid);
+            $i = 0;
+            while ($row = oci_fetch_assoc($stid)) {
+            ?>
+                <option value="<?php echo $row["DIAGNOSIS_ID"]; ?>"> <?php echo $row["DIAGNOSIS_ID"]; ?> &nbsp;<?php echo $row["DIAGNOSIS_NAME"]; ?></option>
+            <?php
+                if (isset($select) && $select != "") {
+                    $select = $_POST['id'];
+                }
+                $i++;
+            }
+            ?>
+        </select><br><br>
         <input type="submit" name="submit" value="Generate bill">
     </form>
     <?php
@@ -150,19 +153,19 @@
 
 
     if (isset($_POST["submit"])) {
-        $appt_id = $_POST["apptid"];
-        $details = $_POST["details"];
-        $pres = $_POST["pres"];
 
-        $sql = oci_parse($conn, "INSERT INTO DIAGNOSIS(APPT_ID, DIAGNOSIS_DETAILS)  
-        values('$appt_id', '$details')");
+        $sql = "SELECT med_price FROM medicine INNER JOIN diagnosis USING (med_id) WHERE diagnosis_id = '" . $diagid . "'";
+        $result = oci_parse($conn, $sql);
+        oci_define_by_name($result, 'MED_PRICE', $amount);
+        $row = oci_execute($result);
+
+        $date = $_POST["date"];
+        $diagid = $_POST["diagid"];
+        $apptid = $_POST["apptid"];
+
+        $sql = oci_parse($conn, "INSERT INTO BILL(BILL_AMOUNT, BILL_DATE, DIAGNOSIS_ID, APPT_ID)  
+        values('$amount', '$date', '$diagid', '$apptid')");
         oci_execute($sql);
-
-        foreach ($_POST['medc'] as $medc) {
-            $sqlpres = oci_parse($conn, "INSERT INTO PRESCRIPTION(APPT_ID, PRESC_REMARKS, MED_ID)  
-                values('$appt_id', '$pres', '$medc')");
-            oci_execute($sqlpres);
-        }
 
         if (($sql) && ($sqlpres)) {
             echo "<script>window.alert('Data Inserted Successfully.');window.location.href='bill.php?appt_id=" . $appt_id . "'; </script>";
