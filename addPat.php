@@ -95,8 +95,7 @@
     $row = oci_execute($stid);
     $fetch = oci_fetch_assoc($stid);
     $lastid = $fetch["PATIENT_ID"];
-
-    $newid = $lastid + 1;
+    $newid = $lastid+1;    
     ?>
     <div class="topnav">
         <a href="home.php">Home</a>
@@ -122,7 +121,6 @@
 <?php
 
 if (isset($_POST["submit"])) {
-    $newid = $_POST["id"];
     $name = $_POST["name"];
     $ic = $_POST["ic"];
     $contact = $_POST["contact"];
@@ -136,8 +134,8 @@ if (isset($_POST["submit"])) {
     } else if ($address == "") {
         echo "<script>window.alert('Please Enter Appointment Date!')</script>";
     } else {
-        $sql = oci_parse($conn, "INSERT INTO PATIENTS(PATIENT_ID, PATIENT_NAME, PATIENT_IC, PATIENT_CONTACT, PATIENT_ADDRESS)  
-        values('$newid','$name','$ic','$contact','$address')");
+        $sql = oci_parse($conn, "INSERT INTO PATIENTS( PATIENT_NAME, PATIENT_IC, PATIENT_CONTACT, PATIENT_ADDRESS)  
+        values('$name','$ic','$contact','$address')");
         oci_execute($sql);
         if ($sql) { ?>
             <html>

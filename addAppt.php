@@ -103,7 +103,7 @@
     $row = oci_execute($stid);
     $fetch = oci_fetch_assoc($stid);
     $lastid = $fetch["APPT_ID"];
-    $newappt = $lastid + 1;
+    $newappt = $lastid +1;
     ?>
     <script>
         $(document).ready(function() {
@@ -192,8 +192,6 @@
 <?php
 
 if (isset($_POST["submit"])) {
-
-    $newappt = $_POST["idappt"];
     $id = $_POST["id"];
     $doctor_id = $_POST["doc_id"];
     $assistant_id = $_POST["ast_id"];
@@ -211,8 +209,8 @@ if (isset($_POST["submit"])) {
     } else if ($time == "") {
         echo "<script>window.alert('Please Enter Select Doctor!')</script>";
     } else {
-        $sql = oci_parse($conn, "INSERT INTO APPOINTMENTS(APPT_ID, APPT_DATE, APPT_TIME, PATIENT_ID, ASSISTANT_ID, DOCTOR_ID)  
-        values('$newappt', '$date','$time','$id', '$assistant_id', '$doctor_id')");
+        $sql = oci_parse($conn, "INSERT INTO APPOINTMENTS( APPT_DATE, APPT_TIME, PATIENT_ID, ASSISTANT_ID, DOCTOR_ID)  
+        values('$date','$time','$id', '$assistant_id', '$doctor_id')");
 
         oci_execute($sql);
         if ($sql) { ?>
