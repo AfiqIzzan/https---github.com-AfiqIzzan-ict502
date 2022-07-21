@@ -82,7 +82,20 @@
 			cursor: pointer;
 		}
 		button:hover, a:hover {color: black;}
-
+		.fil:hover, button:hover, .but:hover{
+			cursor: pointer;
+			color: #111111;
+		}
+		.fil,button {
+			background-color: #CED6E0;
+			border: none;
+			padding: 14px 16px;
+			text-align: center;
+			font-size: 16px;
+			cursor: pointer;
+			color: #555555;
+			border-radius: 4px;
+		}
 		th,td {
 			padding: 7px;
 		}
@@ -131,7 +144,8 @@
 		}
 		?>
 	</table><br><br>
-	<button onclick="w3.sortHTML('#myTable', '.item', 'td:nth-child(1)')" style="cursor:pointer">sort patient id</button>
+	
+	<a class="fil" href="searchPat.php" action="">Filter Patient by IC Number</a>
 </body>
 
 </html>

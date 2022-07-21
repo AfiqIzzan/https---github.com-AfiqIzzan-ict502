@@ -131,7 +131,7 @@
 	?>
 </table><br><br>
 
-<button onclick="w3.sortHTML('#myTable', '.item', 'td:nth-child(1)')" style="cursor:pointer">sort appointment id</button>
+
 <a class="fil" href="searchApptbyIC.php" action="">Filter Appointment by IC Number</a>
 <a class="fil" href="searchApptbyDr.php">Filter Appointment by Doctor</a>
 <a class="fil" href="chart.php">Chart</a>

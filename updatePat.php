@@ -65,6 +65,8 @@
 			<br><br>
 			IC Number <input style="border: none;" type="text" name="ic" readonly value="<?php echo $row['PATIENT_IC']; ?>">
 			<br><br>
+			Contact Number <input type="text" name="contact" value="<?php echo $row['PATIENT_CONTACT']; ?>">
+			<br><br>
 			Address <input type="text" name="address" value="<?php echo $row['PATIENT_ADDRESS']; ?>">
 			<br><br>
 			
@@ -75,7 +77,7 @@
 			if(count($_POST)>0) 
 			{
 				$query = oci_parse($conn, "UPDATE patients SET patient_id='" . $_POST['id'] . "', 
-				patient_name='" . $_POST['name'] . "', patient_ic='" . $_POST['ic'] . "', 
+				patient_name='" . $_POST['name'] . "',patient_contact='" . $_POST['contact'] . "', patient_ic='" . $_POST['ic'] . "', 
 				patient_address='" . $_POST['address'] . "' WHERE patient_id='" . $_POST['id'] . "'");
 				$result = oci_execute($query, OCI_DEFAULT);  
 				if($result)  

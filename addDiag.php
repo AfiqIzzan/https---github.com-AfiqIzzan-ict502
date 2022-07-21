@@ -154,10 +154,9 @@
 
     if (isset($_POST["submit"])) {
         $diagnosisid = $_POST["diagnosisid"];
-        $sql = "SELECT med_price AS amount FROM medicine INNER JOIN diagnosis USING (med_id) WHERE diagnosis_id = '" . $diagnosisid . "'";
+        $sql = "SELECT med_price+30 AS amount FROM medicine INNER JOIN diagnosis USING (med_id) WHERE diagnosis_id = '" . $diagnosisid . "'";
         $result = oci_parse($conn, $sql);
         oci_define_by_name($result, "AMOUNT", $amount);
-        //$am = $amount + 30;
         $row = oci_execute($result);
 
         $row = oci_fetch_assoc($result);
@@ -167,7 +166,7 @@
         $apptid = $_POST["apptid"];
 
         $sqli = oci_parse($conn, "INSERT INTO BILL(BILL_AMOUNT, BILL_DATE, DIAGNOSIS_ID, APPT_ID)  
-        values('$amount+30', '$date', '$diagnosisid', '$apptid')");
+        values('$amount', '$date', '$diagnosisid', '$apptid')");
         oci_execute($sqli);
 
         if ($sql) {
