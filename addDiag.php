@@ -117,13 +117,21 @@
         <br><br>
         Doctor Id <input style="border: none;" type="text" name="docid" readonly value="<?php echo $row['DOCTOR_ID']; ?>">
         <br><br>
-        Diagnosis Details <input type="text" name="details">
-        <br><br>
-        Prescription Remarks<input type="text" name="pres">
+        Diagnosis Details <br>
+        <?php
+        $stid = oci_parse($conn, 'select * from DIAGNOSIS');
+        $row = oci_execute($stid);
+        $i = 0;
+        while ($row = oci_fetch_assoc($stid)) {
+        ?>
+            <input class="cbox" type="checkbox" name="medc[]" value="<?php echo $row["MED_ID"]; ?>"><?php echo $row["MED_NAME"]; ?><br>
+        <?php
+            $i++;
+        }
+        ?>
         <br><br>
         Medicine<br>
         <?php
-        $conn = oci_connect('demo', 'system', 'localhost:1521/xe');
         $stid = oci_parse($conn, 'select * from MEDICINE');
         $row = oci_execute($stid);
         $i = 0;
