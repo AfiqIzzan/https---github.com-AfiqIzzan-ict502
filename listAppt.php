@@ -134,7 +134,7 @@
 
 <a class="fil" href="searchApptbyIC.php" action="">Filter Appointment by IC Number</a>
 <a class="fil" href="searchApptbyDr.php">Filter Appointment by Doctor</a>
-<a class="fil" href="chart.php">Chart</a>
+<a class="fil" href="chart.php">Chart of Number of Doctors Appointment</a>
 
 </body>
 </html>	

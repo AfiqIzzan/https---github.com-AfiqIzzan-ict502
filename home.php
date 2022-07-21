@@ -57,6 +57,22 @@
             padding: 20px;
             box-shadow: rgba(60, 66, 87, 0.12) 0px 17px 24px 0px, rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
 		}
+        .fil:hover {
+			cursor: pointer;
+			color: #111111;
+		}
+
+		.fil{
+			background-color: #CED6E0;
+			border: none;
+			padding: 14px 16px;
+			text-align: center;
+			font-size: 16px;
+			cursor: pointer;
+			color: #555555;
+			border-radius: 4px;
+            text-decoration: none;
+		}
     </style>
 </head>
 <body>
@@ -77,6 +93,10 @@
 		<hr style="overflow: hidden; width:52%; margin-left:22.6em; border-width: 2px;">
 	</div><br><br>
 	
-
+    <div style="margin-left: 30%;">
+    <a class="fil" href="searchPatbysid.php" action="">Filter Staff by Supervisor</a>
+    <a class="fil" href="viewasst.php" action="">View All Assistants</a>
+    <a class="fil" href="viewdrs.php" action="">View All Doctors</a>
+    </div>
 </body>
 </html>
