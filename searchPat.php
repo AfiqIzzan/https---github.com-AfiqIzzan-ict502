@@ -73,9 +73,11 @@
             color: #555555;
             border-radius: 4px;
         }
-        .txtfield{
+
+        .txtfield {
             padding: 8px 12px;
         }
+
         h1 {
             text-align: center;
             color: #414c6b;
@@ -142,8 +144,8 @@
                 </tr><?php
                     } ?>
         </table><?php
-    }
-    ?>
+            }
+                ?>
 </body>
 
 </html>

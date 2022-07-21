@@ -16,49 +16,67 @@ while ($row = oci_fetch_array($stid)) {
 <html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
+<head>
+  <style>
+    .box {
+      margin-left: 30%;
+      margin-top: 10%;
+    }
+
+    body {
+      background-image: url("bg2.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      color: black;
+    }
+  </style>
+</head>
+
 <body>
-  <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-  <script>
-    var barColors = ["#C7BBBC", "#CED6E0", "#b7cfb7", "#f6eac2", "#f5d2d3"];
-    new Chart("myChart", {
-      type: "bar",
-      data: {
-        labels: <?php echo json_encode($docid); ?>,
-        datasets: [{
-          backgroundColor: barColors,
-          data: <?php echo json_encode($apptnum); ?>
-        }]
-      },
-      options: {
-        legend: {
-          display: false
-        },
-        title: {
-          display: true,
-          text: "Number of Appointments According to Doctor ID",
-          fontSize: 18
-        },
-        scales: {
-          yAxes: [{
-            scaleLabel: {
-              display: true,
-              labelString: "Number of Appointments",
-            },
-            ticks: {
-              beginAtZero: true,
-              stepSize: 1
-            }
-          }],
-          xAxes: [{
-            scaleLabel: {
-              display: true,
-              labelString: "Doctor ID",
-            }
+  <div class="box">
+    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+    <script>
+      var barColors = ["#C7BBBC", "#CED6E0", "#b7cfb7", "#f6eac2", "#f5d2d3"];
+      new Chart("myChart", {
+        type: "bar",
+        data: {
+          labels: <?php echo json_encode($docid); ?>,
+          datasets: [{
+            backgroundColor: barColors,
+            data: <?php echo json_encode($apptnum); ?>
           }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          title: {
+            display: true,
+            text: "Number of Appointments According to Doctor ID",
+            fontSize: 18
+          },
+          scales: {
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: "Number of Appointments",
+              },
+              ticks: {
+                beginAtZero: true,
+                stepSize: 1
+              }
+            }],
+            xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: "Doctor ID",
+              }
+            }]
+          }
         }
-      }
-    });
-  </script>
+      });
+    </script>
+  </div>
 
 </body>
 
