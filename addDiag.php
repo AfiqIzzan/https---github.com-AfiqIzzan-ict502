@@ -129,7 +129,7 @@
             });
         });
         </script>
-        <select name='diagid'>
+        <select name='diagnosisid'>
             <option value="">Select Diagnosis</option>
             <?php
             $stid = oci_parse($conn, 'select * from DIAGNOSIS order by DIAGNOSIS_ID asc');
@@ -153,22 +153,25 @@
 
 
     if (isset($_POST["submit"])) {
-
-        $sql = "SELECT med_price FROM medicine INNER JOIN diagnosis USING (med_id) WHERE diagnosis_id = '" . $diagid . "'";
+        $diagnosisid = $_POST["diagnosisid"];
+        $sql = "SELECT med_price AS amount FROM medicine INNER JOIN diagnosis USING (med_id) WHERE diagnosis_id = '" . $diagnosisid . "'";
         $result = oci_parse($conn, $sql);
-        oci_define_by_name($result, 'MED_PRICE', $amount);
+        oci_define_by_name($result, "AMOUNT", $amount);
+        //$am = $amount + 30;
         $row = oci_execute($result);
 
+        $row = oci_fetch_assoc($result);
+
+
         $date = $_POST["date"];
-        $diagid = $_POST["diagid"];
         $apptid = $_POST["apptid"];
 
-        $sql = oci_parse($conn, "INSERT INTO BILL(BILL_AMOUNT, BILL_DATE, DIAGNOSIS_ID, APPT_ID)  
-        values('$amount', '$date', '$diagid', '$apptid')");
-        oci_execute($sql);
+        $sqli = oci_parse($conn, "INSERT INTO BILL(BILL_AMOUNT, BILL_DATE, DIAGNOSIS_ID, APPT_ID)  
+        values('$amount+30', '$date', '$diagnosisid', '$apptid')");
+        oci_execute($sqli);
 
-        if (($sql) && ($sqlpres)) {
-            echo "<script>window.alert('Data Inserted Successfully.');window.location.href='bill.php?appt_id=" . $appt_id . "'; </script>";
+        if ($sql) {
+            echo "<script>window.alert('Data Inserted Successfully.'); window.location.href='bill.php?appt_id=" . $apptid . "'; </script>";
         } else {
             echo "Data Unseccessfully Inserted!";
         }

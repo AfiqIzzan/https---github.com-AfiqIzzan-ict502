@@ -2,8 +2,11 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Filter Appointment By IC Number</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <title>Filter Appointment By IC Number</title>
     <style>
         body {
             background-image: url("bg2.jpg");
@@ -108,17 +111,41 @@
         <a href="listAppt.php">List Of Appointment</a>
     </div>
     <form action="" method="POST">
-        <input class="txtfield" type="text" name="search" placeholder="Enter Date"> <input class="button" name="submit" type="submit" value="SEARCH">
+    <script>
+        $(document).ready(function() {
+            $('select').selectize({
+                sortField: 'text'
+            });
+        });
+        </script>
+        <select name='doc_id'>
+        <option value="">Select Doctor</option>
+            <?php
+            $conn = oci_connect('demo', 'system', 'localhost:1521/xe');
+            $stid = oci_parse($conn, 'select * from STAFFS INNER JOIN DOCTORS ON DOCTORS.DOCTOR_ID = STAFFS.STAFF_ID order by DOCTOR_ID asc');
+            $row = oci_execute($stid);
+            $i = 0;
+            while ($row = oci_fetch_assoc($stid)) {
+            ?>
+                <option value="<?php echo $row["DOCTOR_ID"]; ?>"><?php echo $row["DOCTOR_ID"]; ?> &nbsp;<?php echo $row["STAFF_NAME"]; ?></option>
+            <?php
+                if (isset($select) && $select != "") {
+                    $select = $_POST['doc_id'];
+                }
+                $i++;
+            }
+            ?>
+        </select><br> <input class="button" name="submit" type="submit" value="SEARCH">
     </form>
 
 
 
     <?php
     if (isset($_POST["submit"])) {
-        $search = $_POST["search"];
-        //echo $search;
+        $doctor_id = $_POST["doc_id"];
+        //echo $doctor_id;
         $conn = oci_connect('demo', 'system', 'localhost:1521/xe');
-        $query = "SELECT * FROM APPOINTMENTS  WHERE appt_date LIKE  '%$search%' order by appt_id ";
+        $query = "SELECT * FROM APPOINTMENTS  WHERE doctor_id =  $doctor_id order by appt_id ";
         $stid = oci_parse($conn, $query);
         $row = oci_execute($stid);?>
         <table id="myTable" border="1">
