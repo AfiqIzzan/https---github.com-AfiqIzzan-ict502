@@ -58,12 +58,12 @@
             color: #555555;
         }
 
-        .but:hover {
+        .but:hover, .fil:hover {
             cursor: pointer;
             color: #111111;
         }
 
-        .button {
+        .button, .fil {
             background-color: #CED6E0;
             border: none;
             padding: 8px 12px;
@@ -111,6 +111,7 @@
     </div>
     <form action="" method="POST">
         <input class="txtfield" type="text" name="search" placeholder="IC Number"> <input class="button" name="submit" type="submit" value="SEARCH">
+        <a class="fil" href="listPat.php" action="">BACK</a>
     </form>
 
 

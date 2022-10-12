@@ -9,40 +9,36 @@
             font-family: sans-serif;
         }
 
-        .box {
-            margin: 0px auto;
-            margin-top: 2%;
-            width: 100%;
-            max-width: 447px;
-            background: #f7f7f7;
-            border-radius: 4px;
-            padding: 20px;
-            box-shadow: rgba(60, 66, 87, 0.12) 0px 17px 24px 0px, rgba(0, 0, 0, 0.12) 0px 13px 16px 0px;
-        }
-
         h1 {
             text-align: center;
             color: #414c6b;
-            font-size: 40px;
         }
-
-        select,
-        input {
-            width: 98.5%;
-            height: 25px;
-        }
-
-        select {
+        table {
+			border-collapse: collapse;
+            border: none;
+			margin-left: auto;
+			margin-right: auto;
+			margin: 0px auto;
+			border-radius: 4px;
             width: 100%;
-            height: 30px;
+		}
+        td, th{
+            padding: 3px 50px;
+
+            border-top: 1px solid;
         }
+      button{
+        text-align: center; 
+        cursor: pointer;
+        padding: 6px 14px;
+    }
     </style>
 </head>
 
 <body>
     <?php
     $conn = oci_connect('demo', 'system', 'localhost:1521/xe');
-    $query = "SELECT * FROM bill INNER JOIN diagnosis USING (DIAGNOSIS_ID) INNER JOIN medicine USING (MED_ID) WHERE APPT_ID='" . $_GET['appt_id'] . "'";
+    $query = "SELECT * FROM bill INNER JOIN diagnosis USING (DIAGNOSIS_ID) INNER JOIN medicine USING (MED_ID) JOIN appointments USING (appt_id) JOIN patients USING (patient_id) JOIN doctors USING (doctor_id) JOIN staffs USING (staff_id) WHERE APPT_ID='" . $_GET['appt_id'] . "'";
     $result = oci_parse($conn, $query);
     oci_execute($result);
     $row = oci_fetch_array($result);
@@ -50,15 +46,50 @@
     ?>
     
 
-    <h1>Bill</h1>
-    <div class="box">
-        Bill Id <input style="border: none;" type="number" name="apptid" readonly value="<?php echo $row['BILL_ID']; ?>"><br><br>
-        Bill Date  <input type="text" style="border: none;" name="id" readonly value="<?php echo $row['BILL_DATE']; ?>"><br><br>
-        Bill Amount (RM) <input type="text" style="border: none;" name="docid" readonly value="<?php echo $row['BILL_AMOUNT']; ?>"><br><br>
-        Appointment Id  <input type="text" style="border: none;" name="id" readonly value="<?php echo $row['APPT_ID']; ?>"><br><br>
-        Diagnosis Id <input type="text" style="border: none;" name="id" readonly value="<?php echo $row['DIAGNOSIS_NAME']; ?>"><br><br>
-        Diagnosis Id <input type="text" style="border: none;" name="id" readonly value="<?php echo $row['MED_NAME']; ?>">
+    <h1>Medical Bill Receipt</h1>
+        <div>
+            Bill Id: <?php echo $row['BILL_ID']; ?><br>
+            Bill Date:  <?php echo $row['BILL_DATE']; ?><br>
+            Appointment Id: <?php echo $row['APPT_ID']; ?><br>
+            Doctor Name: <?php echo $row['STAFF_NAME']; ?>
+        </div>
+        <br><br>
+        <div>
+            Patient Details
+            <br><br>Patient Name: <?php echo $row['PATIENT_NAME']; ?>
+            <br>Ic Number: <?php echo $row['PATIENT_IC']; ?>
+            <br>Address: <?php echo $row['PATIENT_ADDRESS']; ?>
+        </div>
+        <br><br>
+        <table>
+            <tr style="border-top: 3px solid; text-align:left">
+            <th>CODE</th>
+            <th>DESCRIPTION</th>
+            <th>AMOUNT</th>
+            <th>TOTAL</th>
+            </tr>
+            <tr>
+            <td>CON</td>
+            <td>CONSULTATION</td>
+            <td>30.00</td>
+            <td>30.00</td>
+            </tr>
+            <tr>
+                <td><?php echo $row['MED_ID']; ?></td>
+                <td><?php echo $row['MED_NAME']; ?></td>
+                <td><?php echo $row['MED_PRICE']; ?>.00</td>
+                <td><?php echo $row['MED_PRICE']; ?>.00</td>
+            </tr>
+            <tr style="border-top: 2px solid;">
+                <td>TOTAL CHARGES:</td>
+                <td></td>
+                <td></td>
+                <td><?php echo $row['BILL_AMOUNT']; ?>.00</td>
+            </tr>
 
-    </div>
+        </table>
+        <br><br>
+        <button><a href="home.php" style="text-decoration: none; color:black;">HOME</a></button>
+        <button type="button" value="print" onclick="window.print()">PRINT</button>
 </body>
 </html>

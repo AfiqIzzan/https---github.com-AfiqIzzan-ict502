@@ -15,31 +15,6 @@
             margin: 0;
         }
 
-        .topnav {
-            overflow: hidden;
-            background-color: transparent;
-            margin-left: 22%;
-        }
-
-        .topnav a {
-            float: left;
-            color: #f2f2f2;
-            text-align: center;
-            padding: 12px 16px;
-            text-decoration: none;
-            font-size: 17px;
-            color: #111111;
-        }
-
-        .topnav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .topnav a.active {
-            background-color: #04AA6D;
-            color: white;
-        }
 
         table {
             background: #f7f7f7;
@@ -74,8 +49,9 @@
             border-radius: 4px;
         }
 
-        .txtfield {
+        select, .txtfield {
             padding: 8px 12px;
+            border: none;
         }
 
         h1 {
@@ -118,13 +94,6 @@
 </head>
 
 <body>
-    <div class="topnav">
-        <a href="home.php">Home</a>
-        <a href="addPat.php">Register Patient</a>
-        <a href="listPat.php">List Of Patient</a>
-        <a href="addAppt.php">Create Appointment</a>
-        <a href="listAppt.php">List Of Appointment</a>
-    </div>
     <form action="" method="POST">
     <script>
         $(document).ready(function() {
@@ -133,7 +102,7 @@
             });
         });
         </script>
-        <select name='supid'>
+        <br><br><select name='supid'>
         <option value="">Select Supervisor</option>
             <?php
             $conn = oci_connect('demo', 'system', 'localhost:1521/xe');
@@ -149,8 +118,8 @@
                 }
                 $i++;
             }
-            ?><br>
-            </select><br> <input class="button" name="submit" type="submit" value="SEARCH">
+            ?>
+            </select>&nbsp;<input class="button" name="submit" type="submit" value="SEARCH">
     </form>
 
 

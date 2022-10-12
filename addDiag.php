@@ -68,27 +68,14 @@
             outline: none;
         }
 
-        .cbox {
-            height: 17px;
-            width: auto;
-            text-align: center;
-        }
-
-        .button {
+        .fil {
             max-width: 30%;
             height: 40px;
             position: relative;
-            left: 37%;
-            background-color: #24a0ed;
+            left: 47%;
             border: none;
             border-radius: 6px;
             color: #111111;
-        }
-
-        .button:hover {
-            cursor: pointer;
-            background-color: #008CBA;
-            color: whitesmoke;
         }
     </style>
     <title>Update Employee Data</title>
@@ -123,11 +110,11 @@
         <br><br>
         Diagnosis
         <script>
-        $(document).ready(function() {
-            $('select').selectize({
-                sortField: 'text'
+            $(document).ready(function() {
+                $('select').selectize({
+                    sortField: 'text'
+                });
             });
-        });
         </script>
         <select name='diagnosisid'>
             <option value="">Select Diagnosis</option>
@@ -147,6 +134,7 @@
             ?>
         </select><br><br>
         <input type="submit" name="submit" value="Generate bill">
+        <br><br><a class="fil" href="listAppt.php" action="">Back</a>
     </form>
     <?php
 

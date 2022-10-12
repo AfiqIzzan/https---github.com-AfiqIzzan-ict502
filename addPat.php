@@ -57,8 +57,13 @@
         }
 
         input {
-            width: 98%;
-            height: 25px;
+            width: 100%;
+            height: 29px;
+            border-radius: 4px;
+            outline: none;
+            box-sizing: border-box;
+            border: 1px solid #c0c0c2;
+            outline: none;
         }
 
         .button {
@@ -107,10 +112,10 @@
     <h1>Register Patient</h1>
     <form action="" method="POST">
         ID <br><input style="border: none; color:darkgray; cursor:not-allowed;" type="number" name="id" value="<?php echo $newid; ?>" readonly><br /><br />
-        Name <br><input type="text" name="name" /><br /><br />
+        Full Name <br><input type="text" name="name" /><br /><br />
         IC Number <br><input type="text" name="ic" placeholder="XXXXXX-XX-XX" /><br /><br />
         Contact Number <br><input type="text" name="contact"  placeholder="XXX-XXXXXXX"/><br /><br />
-        Address <br><input type="text" name="address" /><br /><br />
+        Address <br><input type="text" name="address"/><br /><br />
 
         <input class="button" type="submit" name="submit" value="REGISTER" /><br>
     </form>
@@ -125,6 +130,8 @@ if (isset($_POST["submit"])) {
     $ic = $_POST["ic"];
     $contact = $_POST["contact"];
     $address = $_POST["address"];
+
+
     if ($name == "") {
         echo "<script>window.alert('Please Select Patient Id!')</script>";
     } else if ($ic == "") {

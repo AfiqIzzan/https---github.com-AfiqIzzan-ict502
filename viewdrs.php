@@ -94,7 +94,7 @@
 <script src="https://www.w3schools.com/lib/w3.js"></script>
 
 <body>
-	<h1>List Of Assistants</h1>
+	<h1>List Of Doctors</h1>
 	<table id="myTable" border="1">
 		<tr>
 			<th>DOCTOR ID</th>

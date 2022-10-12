@@ -101,14 +101,14 @@
 		<th>APPOINTMENT ID</th>
 		<th>APPOINTMENT DATE</th>
 		<th>APPOINTMENT TIME</th>
-		<th>PATIENT ID</th>
-		<th>ASSISTANT ID</th>
+		<th>PATIENT NAME</th>
+		<th>ASSISTANT NAME</th>
 		<th>DOCTOR ID</th>
 		<th colspan="3">ACTION</th>
 	</tr>
 	<?php
         $conn = oci_connect('demo', 'system', 'localhost:1521/xe');
-        $query = 'select * from APPOINTMENTS order by APPT_ID asc';
+        $query = 'select * from APPOINTMENTS JOIN patients USING (patient_id) JOIN assistants USING (assistant_id) JOIN staffs USING (staff_id) JOIN doctors USING (doctor_id) order by APPT_ID asc';
         $stid = oci_parse($conn, $query);
         $row = oci_execute($stid);
 	    $i=0;
@@ -118,8 +118,8 @@
 		<td><?php echo $row["APPT_ID"]; ?></td>
 		<td><?php echo $row["APPT_DATE"]; ?></td>
 		<td><?php echo $row["APPT_TIME"]; ?></td>
-		<td><?php echo $row["PATIENT_ID"]; ?></td>
-		<td><?php echo $row["ASSISTANT_ID"]; ?></td>
+		<td><?php echo $row["PATIENT_NAME"]; ?></td>
+		<td><?php echo $row["STAFF_NAME"]; ?></td>
         <td><?php echo $row["DOCTOR_ID"]; ?></td>
 		<td><a class="but" href="updateAppt.php?APPT_ID=<?=$row["APPT_ID"];?>">Update</a></td> 
 		<td><a class="but" href="deleteAppt.php?APPT_ID=<?=$row["APPT_ID"];?>">Delete</a></td>

@@ -28,7 +28,25 @@ while ($row = oci_fetch_array($stid)) {
       background-repeat: no-repeat;
       background-size: cover;
       color: black;
+      font-family: sans-serif;
     }
+    .fil:hover {
+			cursor: pointer;
+			color: #111111;
+		}
+
+		.fil{
+			background-color: #CED6E0;
+			border: none;
+			padding: 14px 16px;
+			text-align: center;
+			font-size: 16px;
+			cursor: pointer;
+			color: #555555;
+			border-radius: 4px;
+      text-decoration: none;
+      margin-left: 50%;
+		}
   </style>
 </head>
 
@@ -77,7 +95,7 @@ while ($row = oci_fetch_array($stid)) {
       });
     </script>
   </div>
-
+  <br><br><a class="fil" href="listAppt.php" action="">BACK</a>
 </body>
 
 </html>

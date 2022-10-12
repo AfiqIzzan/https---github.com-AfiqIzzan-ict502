@@ -66,7 +66,7 @@
             color: #111111;
         }
 
-        .button {
+        .button, .fil {
             background-color: #CED6E0;
             border: none;
             padding: 8px 12px;
@@ -91,7 +91,7 @@
             cursor: pointer;
         }
 
-        .button:hover {
+        .button:hover, a:hover {
             color: black;
         }
 
@@ -99,6 +99,8 @@
         td {
             padding: 5px;
         }
+        
+
     </style>
 </head>
 
@@ -136,6 +138,7 @@
             }
             ?>
         </select><br> <input class="button" name="submit" type="submit" value="SEARCH">
+        <a class="fil" href="listAppt.php" action="">BACK</a>
     </form>
 
 
